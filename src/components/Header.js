@@ -13,8 +13,8 @@ const Header = () => {
                         <li className="nav-item"><Link to="#" className="nav-link link-dark px-2">Contacts</Link></li>
                     </ul>
                     <ul className="nav">
-                        <li className="nav-item"><Link to="#" className="nav-link link-dark px-2">Login</Link></li>
-                        <li className="nav-item"><Link to="/users/login"
+                        <li className="nav-item"><Link to="/users/login" className="nav-link link-dark px-2">Login</Link></li>
+                        <li className="nav-item"><Link to="/users/register"
                                                        className="nav-link link-dark px-2">Register</Link></li>
                     </ul>
                 </div>

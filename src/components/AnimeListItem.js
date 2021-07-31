@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 const AnimeListItem = ({anime}) => {
     return (
-        <Link to={`/animes/${anime.id}`}>
+        <Link to={`/animes/${anime.id}`} className='text-dark text-decoration-none'>
             <div className="col">
               <div className="card shadow-sm">
                 <img src={anime.poster} alt={anime.title} className='card-img-top'/>

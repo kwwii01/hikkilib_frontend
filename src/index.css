@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('https://www.kindpng.com/picc/m/224-2247762_haise-sasaki-ken-kaneki-png-transparent-tokyo-ghoul.png');
+  background-size: cover;
+  background-position: center center;
+}

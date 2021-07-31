@@ -1,35 +1,34 @@
 import AnimeListItem from "./AnimeListItem";
-import {connect} from "react-redux";
-import {getAnimes} from "../actions/animes";
-import PropTypes from "prop-types"
-import {Component} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAnimes } from "../actions/animes";
+import { useEffect } from "react";
+import axios from "axios";
 
-export class AnimeList extends Component {
-    static propTypes = {
-        animes: PropTypes.array.isRequired
-    }
+const AnimeList = () => {
+    const animes = useSelector((state) => state.animes.animes);
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        this.props.getAnimes()
-    }
+    const fetchAnimes = async () => {
+        const res = await axios.get('http://localhost:8000/api/animes/')
+            .catch((err) => console.log(err))
+        dispatch(setAnimes(res.data))
+    };
 
-    render() {
-        return (
+    useEffect(() => {
+        if (animes.length) return;
+        fetchAnimes();
+    });
+    return (
             <div className="album py-5 bg-light">
               <div className="container">
                 <div className="row row-cols-1 row-cols-sm-3 row-cols-md-5 g-3">
-                    {this.props.animes.map((anime) => (
+                    {animes.map((anime) => (
                         <AnimeListItem key={anime.id} anime={anime} />
                     ))}
                 </div>
               </div>
             </div>
-        )
-    }
+    );
 }
 
-const mapStateToProps = state => ({
-    animes: state.animes.animes
-})
-
-export default connect(mapStateToProps, { getAnimes })(AnimeList);
+export default AnimeList

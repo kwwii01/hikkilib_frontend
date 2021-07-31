@@ -1,7 +1,8 @@
-import {GET_ANIMES} from "../actions/types";
+import {GET_ANIME_DETAILS, GET_ANIMES} from "../actions/types";
 
 const initialState = {
-    animes: []
+    animes: [],
+    anime: null,
 }
 
 export default function (state = initialState, action) {
@@ -9,7 +10,14 @@ export default function (state = initialState, action) {
         case GET_ANIMES:
             return {
                 ...state,
-                animes: action.payload
+                animes: action.payload,
+                anime: null
+            }
+        case GET_ANIME_DETAILS:
+            return {
+                ...state,
+                anime: action.payload,
+                animes: []
             }
         default:
             return state;

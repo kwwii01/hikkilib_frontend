@@ -1,32 +1,43 @@
-import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { Link, useParams } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import { setAnimeDetails } from "../actions/animes";
+import axios from "axios";
+import {useEffect} from "react";
 
 const AnimeDetails = () => {
-    const { id } = useParams()
-    const [anime, setAnime] = useState([])
+    const anime = useSelector((state) => state.animes.anime);
+    const { animeId } = useParams();
+    const dispatch = useDispatch();
+    const fetchAnimeDetails = async () => {
+        const res = await axios.get(`http://localhost:8000/api/animes/${animeId}/`)
+            .catch(err => console.log(err))
+        console.log(res.data)
+        dispatch(setAnimeDetails(res.data))
+    }
 
     useEffect(() => {
-        const getAnime = async () => {
-            const animeFromServer = await fetchAnime()
-            setAnime(animeFromServer)
+        if (anime == null) {
+            fetchAnimeDetails();
         }
-
-        getAnime()
     })
-
-    const fetchAnime = async () => {
-        const res = await fetch(`/api/animes/${id}`)
-        const data = await res.json()
-        return data
-    }
 
     return (
         <div className="container">
-            <h3>{anime.title}</h3>
-            <img src={anime.poster} alt={anime.title} />
-            <Link to='/'>Back to anime list</Link>
+            {anime && <div className="row">
+                <div className="col-3">
+                    <img src={anime.poster || ''} alt={anime.title || ''} width='225' height='315'/>
+                </div>
+                <div className="col-5">
+                    <p>
+                        {anime.title || ''}
+                    </p>
+                    <p>
+                        {anime.description || ''}
+                    </p>
+                </div>
+            </div>}
         </div>
     )
 }
 
-export default AnimeDetails
+export default AnimeDetails;

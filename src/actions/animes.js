@@ -1,14 +1,17 @@
-import axios from "axios";
-
-import {GET_ANIMES} from "./types";
+import {GET_ANIMES, GET_ANIME_DETAILS} from "./types";
 
 //GET ANIMES
-export const getAnimes = () => dispatch => {
-    axios.get('api/animes/')
-        .then(res => {
-            dispatch({
-                type: GET_ANIMES,
-                payload: res.data
-            });
-        }).catch(err => console.log(err));
+export const setAnimes = (animes) => {
+    return {
+        type: GET_ANIMES,
+        payload: animes
+    }
+}
+
+//GET EXACT ANIME DETAILS
+export const setAnimeDetails = (anime) => {
+    return {
+        type: GET_ANIME_DETAILS,
+        payload: anime
+    }
 }

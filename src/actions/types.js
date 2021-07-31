@@ -1,1 +1,2 @@
 export const GET_ANIMES = 'GET_ANIMES';
+export const GET_ANIME_DETAILS = 'GET_ANIME_DETAILS';

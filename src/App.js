@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import AnimeList from "./components/AnimeList";
 import AnimeDetails from "./components/AnimeDetails";
@@ -15,18 +15,23 @@ const App = () => {
             <Provider store={store}>
                 <div className='container'>
                     <Header />
-                    <Route path='/' exact render={(props) => (
-                        <AnimeList  />
-                    )} />
-                    <Route path='/animes/:id'>
-                        <AnimeDetails />
-                    </Route>
-                    <Route path='/users/register'>
-                        <Register />
-                    </Route>
-                    <Route path='/users/login'>
-                        <Login />
-                    </Route>
+                    <Switch>
+                        <Route path='/' exact render={(props) => (
+                            <AnimeList  />
+                        )} />
+                        <Route path='/animes/:animeId' exact>
+                            <AnimeDetails />
+                        </Route>
+                        <Route path='/users/register' exact>
+                            <Register />
+                        </Route>
+                        <Route path='/users/login' exact>
+                            <Login />
+                        </Route>
+                        <Route>
+                            404 not found
+                        </Route>
+                    </Switch>
                 </div>
             </Provider>
         </Router>

@@ -11,8 +11,8 @@ import store from "./store";
 
 const App = () => {
     return (
-        <Router>
-            <Provider store={store}>
+        <Provider store={store}>
+            <Router>
                 <div className='container'>
                     <Header />
                     <Switch>
@@ -33,8 +33,8 @@ const App = () => {
                         </Route>
                     </Switch>
                 </div>
-            </Provider>
-        </Router>
+            </Router>
+        </Provider>
     )
 }
 

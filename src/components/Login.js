@@ -1,6 +1,17 @@
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 const Login = () => {
+    const [username, setUsername] = useState([]);
+    const [password, setPassword] = useState([]);
+
+    const onUsernameChange = (e) => {
+        setUsername(e.target.value)
+    }
+    const onPasswordChange = (e) => {
+        setPassword(e.target.value)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
     }
@@ -18,11 +29,12 @@ const Login = () => {
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-group mb-3">
                                             <input id="inputUsername" type="text" placeholder="Username" required
-                                                   autoFocus=""
+                                                   autoFocus="" name='username' onChange={onUsernameChange}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4" />
                                         </div>
                                         <div className="form-group mb-3">
-                                            <input id="inputPassword" type="password" placeholder="Password" required
+                                            <input id="inputPassword" type="password" placeholder="Password"
+                                                   required name='password' onChange={onPasswordChange}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" />
                                         </div>
                                         <button type="submit"

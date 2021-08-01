@@ -22,3 +22,16 @@ code {
   background-size: cover;
   background-position: center center;
 }
+
+.title, .infoCategory {
+  background-color: black;
+  color: white;
+}
+
+.animePoster {
+  border: 4px solid black;
+}
+
+.char-card {
+  width: 150px;
+}

@@ -1,9 +1,30 @@
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 const Register = () => {
+    const [username, setUsername] = useState([]);
+    const [email, setEmail] = useState([]);
+    const [password1, setPassword1] = useState([]);
+    const [password2, setPassword2] = useState([]);
+
     const handleSubmit = (e) => {
         e.preventDefault()
     }
+
+    const onUsernameChange = (e) => {
+        setUsername(e.target.value)
+    }
+    const onEmailChange = (e) => {
+        setEmail(e.target.value)
+    }
+    const onPassword1Change = (e) => {
+        setPassword1(e.target.value)
+    }
+    const onPassword2Change = (e) => {
+        setPassword2(e.target.value)
+    }
+
+
 
     return (
          <div className="container-fluid">
@@ -19,20 +40,22 @@ const Register = () => {
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-group mb-3">
                                             <input id="inputUsername" type="text" placeholder="Username" required
-                                                   autoFocus=""
+                                                   autoFocus="" name='username' onChange={onUsernameChange}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4" />
                                         </div>
                                         <div className="form-group mb-3">
                                             <input id="inputEmail" type="text" placeholder="Email address"
-                                                   autoFocus=""
+                                                   autoFocus="" name='email' onChange={onEmailChange}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4" />
                                         </div>
                                         <div className="form-group mb-3">
                                             <input id="inputPassword1" type="password" placeholder="Password" required
+                                                   name='password1' onChange={onPassword1Change}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" />
                                         </div>
                                         <div className="form-group mb-3">
-                                            <input id="inputPassword2" type="password" placeholder="Confirm password" required
+                                            <input id="inputPassword2" type="password" placeholder="Confirm password"
+                                                   required name='password2' onChange={onPassword2Change}
                                                    className="form-control rounded-pill border-0 shadow-sm px-4 text-primary" />
                                         </div>
                                         <button type="submit"

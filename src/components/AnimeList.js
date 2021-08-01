@@ -15,8 +15,7 @@ const AnimeList = () => {
     };
 
     useEffect(() => {
-        if (animes.length) return;
-        fetchAnimes();
+        if (!animes.length) fetchAnimes();
     });
     return (
             <div className="album py-5 bg-light">

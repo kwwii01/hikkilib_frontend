@@ -1,22 +1,31 @@
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import { Link, Redirect } from "react-router-dom";
+import { useState } from "react";
+import { loginUser } from "../actions/auth";
+import { useSelector, useDispatch } from "react-redux";
 
 const Login = () => {
     const [username, setUsername] = useState([]);
     const [password, setPassword] = useState([]);
 
+    const dispatch = useDispatch();
+
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
     const onUsernameChange = (e) => {
         setUsername(e.target.value)
-    }
+    };
     const onPasswordChange = (e) => {
         setPassword(e.target.value)
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault()
-    }
+        dispatch(loginUser(username, password));
+    };
+
     return (
         <div className="container-fluid">
+            {isAuthenticated && <Redirect to='/' />}
             <div className="row no-gutter">
                 <div className="col-md-6 d-none d-md-flex bg-image"></div>
                 <div className="col-md-6 bg-light">
@@ -53,7 +62,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAnimes } from "../actions/animes";
 import { useEffect } from "react";
 import axios from "axios";
+import {loadUser} from "../actions/auth";
 
 const AnimeList = () => {
     const animes = useSelector((state) => state.animes.animes);
+    const auth = useSelector((state) => state.auth)
     const dispatch = useDispatch();
 
     const fetchAnimes = async () => {
@@ -17,6 +19,7 @@ const AnimeList = () => {
     useEffect(() => {
         if (!animes.length) fetchAnimes();
     });
+
     return (
             <div className="album py-5 bg-light">
               <div className="container">

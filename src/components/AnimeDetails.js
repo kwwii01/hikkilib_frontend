@@ -71,6 +71,10 @@ const AnimeDetails = () => {
                         </div>
                     </div>
                 </div>
+                <h2 className='infoCategory'>Description</h2>
+                <div className="row mb-3">
+                    {anime.description}
+                </div>
                 <h2 className='infoCategory'>Main Characters</h2>
                 <div className="row">
                     {anime.characters.filter(character => character.main_character).map(character => (

@@ -1,5 +1,7 @@
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {registerUser} from "../actions/auth";
 
 const Register = () => {
     const [username, setUsername] = useState([]);
@@ -7,28 +9,32 @@ const Register = () => {
     const [password1, setPassword1] = useState([]);
     const [password2, setPassword2] = useState([]);
 
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault()
-    }
+        dispatch(registerUser(username, password1, email));
+    };
 
     const onUsernameChange = (e) => {
         setUsername(e.target.value)
-    }
+    };
     const onEmailChange = (e) => {
         setEmail(e.target.value)
-    }
+    };
     const onPassword1Change = (e) => {
         setPassword1(e.target.value)
-    }
+    };
     const onPassword2Change = (e) => {
         setPassword2(e.target.value)
-    }
-
-
+    };
 
     return (
          <div className="container-fluid">
-            <div className="row no-gutter">
+            {auth.isAuthenticated ? <Redirect to='/' />
+                : auth.registrationPending ? <Redirect to='/users/login' />
+                    :<div className="row no-gutter">
                 <div className="col-md-6 d-none d-md-flex bg-image"></div>
                 <div className="col-md-6 bg-light">
                     <div className="login d-flex align-items-center py-5">
@@ -72,7 +78,7 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

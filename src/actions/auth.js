@@ -1,4 +1,12 @@
-import {AUTH_ERROR, AUTH_SUCCESS, LOGIN_FAILED, LOGIN_SUCCESS} from "./types";
+import {
+    AUTH_ERROR,
+    AUTH_SUCCESS,
+    LOGIN_FAILED,
+    LOGIN_SUCCESS, LOGOUT_FAILED,
+    LOGOUT_SUCCESS,
+    REGISTRATION_FAILED,
+    REGISTRATION_SUCCESS
+} from "./types";
 import axios from "axios";
 
 //CHECK TOKEN & LOAD USER
@@ -53,3 +61,54 @@ export const loginUser = (username, password) => (dispatch) => {
             });
         });
 };
+
+//LOGOUT USER
+export const logoutUser = (token) => (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    if (token) {
+        config.headers['Authorization'] = `Token ${token}`;
+    }
+
+    axios
+        .post('http://localhost:8000/auth/token/logout/', config)
+        .then(res => {
+            dispatch({
+                type: LOGOUT_SUCCESS,
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: LOGOUT_FAILED,
+            });
+        });
+};
+
+//REGISTER USER
+export const registerUser = (username, password, email) => (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = email ? JSON.stringify({username, password, email}) : JSON.stringify({username, password});
+
+    axios
+        .post('http://localhost:8000/auth/users/', body, config)
+        .then(res => {
+            dispatch({
+                type: REGISTRATION_SUCCESS,
+            });
+        })
+        .catch(err => {
+            console.log(err.response.data)
+            dispatch({
+                type: REGISTRATION_FAILED,
+            });
+        });
+}

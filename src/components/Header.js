@@ -1,6 +1,25 @@
 import {Link} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {logoutUser} from "../actions/auth";
+import {useEffect, useState} from "react";
 
 const Header = () => {
+    const auth = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState(['']);
+    const user = auth.user
+
+    const onLogoutClick = () => {
+        dispatch(logoutUser(auth.token));
+    };
+
+    useEffect(() => {
+        if (user) {
+            setUsername(user.username);
+        }
+    },[user]);
+
     return (
         <>
             <nav className="py-2 bg-light border-bottom">
@@ -13,9 +32,13 @@ const Header = () => {
                         <li className="nav-item"><Link to="#" className="nav-link link-dark px-2">Contacts</Link></li>
                     </ul>
                     <ul className="nav">
-                        <li className="nav-item"><Link to="/users/login" className="nav-link link-dark px-2">Login</Link></li>
+                        {auth.isAuthenticated
+                        ? <><li className="nav-item"><Link to="#" className="nav-link link-dark px-2">{username}, </Link></li>
+                        <li className="nav-item"><button onClick={onLogoutClick}
+                                                       className="nav-link link-dark px-2">Logout</button></li>  </>
+                        : <><li className="nav-item"><Link to="/users/login" className="nav-link link-dark px-2">Login</Link></li>
                         <li className="nav-item"><Link to="/users/register"
-                                                       className="nav-link link-dark px-2">Register</Link></li>
+                                                       className="nav-link link-dark px-2">Register</Link></li></>}
                     </ul>
                 </div>
             </nav>

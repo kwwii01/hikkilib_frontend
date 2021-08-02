@@ -16,8 +16,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(auth.isAuthenticated);
-        if (auth.isAuthenticated == null) {
+        if ((auth.isAuthenticated == null) || (auth.isAuthenticated  && !auth.user)) {
             const token = auth.token;
             dispatch(loadUser(token));
         }

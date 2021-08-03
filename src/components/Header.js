@@ -8,7 +8,9 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const [username, setUsername] = useState(['']);
-    const user = auth.user
+    const [picture, setPicture] = useState(['']);
+    const user = auth.user;
+    const current_profile = auth.current_profile;
 
     const onLogoutClick = () => {
         dispatch(logoutUser(auth.token));
@@ -19,6 +21,12 @@ const Header = () => {
             setUsername(user.username);
         }
     },[user]);
+
+    useEffect(() => {
+        if (current_profile) {
+            setPicture(current_profile.picture);
+        }
+    }, [current_profile]);
 
     return (
         <>
@@ -33,7 +41,9 @@ const Header = () => {
                     </ul>
                     <ul className="nav">
                         {auth.isAuthenticated
-                        ? <><li className="nav-item"><Link to="#" className="nav-link link-dark px-2">{username}, </Link></li>
+                        ? <><li className="nav-item"><Link to="#" className="nav-link link-dark px-2">{username},
+                                <img src={picture} alt="username" width='40' height='40'/>
+                        </Link></li>
                         <li className="nav-item"><button onClick={onLogoutClick}
                                                        className="nav-link link-dark px-2">Logout</button></li>  </>
                         : <><li className="nav-item"><Link to="/users/login" className="nav-link link-dark px-2">Login</Link></li>

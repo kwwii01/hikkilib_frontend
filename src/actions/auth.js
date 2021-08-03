@@ -1,7 +1,7 @@
 import {
     ADD_ERROR_MESSAGE,
     AUTH_ERROR,
-    AUTH_SUCCESS,
+    AUTH_SUCCESS, LOAD_PROFILE_FAILED, LOAD_PROFILE_SUCCESS,
     LOGIN_FAILED,
     LOGIN_SUCCESS, LOGOUT_FAILED,
     LOGOUT_SUCCESS,
@@ -10,6 +10,28 @@ import {
 } from "./types";
 import axios from "axios";
 import {addErrorMessage, addSuccessMessage} from "./messages";
+
+//LOAD PROFILE OF CURRENT USER
+export const loadProfile = (token) => (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    }
+    axios
+        .get(`http://localhost:8000/api/profiles/me/`, config)
+        .then(res => {
+            dispatch({
+                type: LOAD_PROFILE_SUCCESS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: LOAD_PROFILE_FAILED,
+            });
+        });
+}
 
 //CHECK TOKEN & LOAD USER
 export const loadUser = (token) => (dispatch) => {
@@ -29,7 +51,9 @@ export const loadUser = (token) => (dispatch) => {
             dispatch({
                 type: AUTH_SUCCESS,
                 payload: res.data
-            });
+            })
+            console.log(res.data)
+            dispatch(loadProfile(token));
         })
         .catch(err => {
             dispatch({

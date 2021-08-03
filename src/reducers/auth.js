@@ -4,7 +4,7 @@ import {
     LOGIN_FAILED,
     LOGIN_SUCCESS,
     LOGOUT_SUCCESS,
-    LOGOUT_FAILED, REGISTRATION_FAILED, REGISTRATION_SUCCESS,
+    LOGOUT_FAILED, REGISTRATION_FAILED, REGISTRATION_SUCCESS, LOAD_PROFILE_FAILED, LOAD_PROFILE_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -12,7 +12,8 @@ const initialState = {
     isAuthenticated: null,
     isLoading: false,
     user: null,
-    registrationPending: false
+    registrationPending: false,
+    current_profile: null
 }
 
 export default function(state = initialState, action) {
@@ -22,13 +23,16 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                current_profile: null
+
             };
         case REGISTRATION_FAILED:
         case LOGOUT_FAILED:
         case LOGOUT_SUCCESS:
         case LOGIN_FAILED:
         case AUTH_ERROR:
+        case LOAD_PROFILE_FAILED:
             localStorage.removeItem('token');
             return {
                 ...state,
@@ -36,6 +40,7 @@ export default function(state = initialState, action) {
                 isAuthenticated: false,
                 isLoading: false,
                 user: null,
+                current_profile: null
             };
         case LOGIN_SUCCESS:
             localStorage.setItem('token', action.payload.auth_token)
@@ -50,6 +55,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 registrationPending: true
+            }
+        case LOAD_PROFILE_SUCCESS:
+            return {
+                ...state,
+                current_profile: action.payload
             }
         default:
             return state;

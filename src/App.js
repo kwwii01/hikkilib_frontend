@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import {loadUser} from "./actions/auth";
+import Messages from "./components/Messages";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
         <Router>
             <div className='container'>
                 <Header />
+                <Messages />
                 <Switch>
                     <Route path='/' exact render={(props) => (
                         <AnimeList  />

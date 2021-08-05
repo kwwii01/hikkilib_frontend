@@ -1,24 +1,22 @@
 import AnimeListItem from "./AnimeListItem";
-import { useDispatch, useSelector } from "react-redux";
-import { setAnimes } from "../actions/animes";
-import { useEffect } from "react";
-import axios from "axios";
-import {loadUser} from "../actions/auth";
+import {useLocation, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getAnimes} from "../actions/animes";
 
 const AnimeList = () => {
     const animes = useSelector((state) => state.animes.animes);
-    const auth = useSelector((state) => state.auth)
     const dispatch = useDispatch();
-
-    const fetchAnimes = async () => {
-        const res = await axios.get('http://localhost:8000/api/animes/')
-            .catch((err) => console.log(err))
-        dispatch(setAnimes(res.data))
-    };
+    const location = useLocation();
+    const { searchLine } = useParams();
 
     useEffect(() => {
-        if (!animes.length) fetchAnimes();
-    });
+        if (searchLine) {
+            dispatch(getAnimes(searchLine));
+        } else {
+            dispatch(getAnimes());
+        }
+    }, [location.pathname]);
 
     return (
             <div className="album py-5 bg-light">

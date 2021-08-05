@@ -1,20 +1,32 @@
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {logoutUser} from "../actions/auth";
-import {useEffect, useState} from "react";
+import { logoutUser } from "../actions/auth";
+import { useEffect, useState } from "react";
+import { setSearchLine } from "../actions/filtering";
 
 const Header = () => {
     const auth = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
+    const history = useHistory();
     const [username, setUsername] = useState(['']);
     const [picture, setPicture] = useState(['']);
+    const [searchInputValue, setSearchInputValue] = useState(['']);
     const user = auth.user;
     const current_profile = auth.current_profile;
 
     const onLogoutClick = () => {
         dispatch(logoutUser(auth.token));
     };
+
+    const onSearchSubmit = (e) => {
+        e.preventDefault()
+        history.push(`/animes/search/${searchInputValue}`);
+    }
+
+    const onChange = (e) => {
+        setSearchInputValue(e.target.value);
+    }
 
     useEffect(() => {
         if (user) {
@@ -58,8 +70,9 @@ const Header = () => {
                        className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                         <span className="fs-4">Hikkilib</span>
                     </Link>
-                    <form className="col-12 col-lg-auto mb-3 mb-lg-0">
-                        <input type="search" className="form-control" placeholder="Search..." aria-label="Search" />
+                    <form className="col-12 col-lg-auto mb-3 mb-lg-0" onSubmit={onSearchSubmit}>
+                        <input type="search" className="form-control" onChange={onChange}
+                               placeholder="Search..." aria-label="Search" />
                     </form>
                 </div>
             </header>

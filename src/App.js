@@ -1,7 +1,6 @@
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect} from "react";
-import axios from "axios";
 
 import AnimeList from "./components/AnimeList";
 import AnimeDetails from "./components/AnimeDetails";
@@ -10,6 +9,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import {loadUser} from "./actions/auth";
 import Messages from "./components/Messages";
+import {setAnimes} from "./actions/animes";
 
 
 const App = () => {
@@ -29,9 +29,12 @@ const App = () => {
                 <Header />
                 <Messages />
                 <Switch>
-                    <Route path='/' exact render={(props) => (
+                    <Route path='/' exact >
                         <AnimeList  />
-                    )} />
+                    </Route>
+                    <Route path='/animes/search/:searchLine' exact >
+                        <AnimeList  />
+                    </Route>
                     <Route path='/animes/:animeId' exact>
                         <AnimeDetails />
                     </Route>

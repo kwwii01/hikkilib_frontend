@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { setAnimeDetails } from "../actions/animes";
-import axios from "axios";
+import { getAnimeDetails } from "../actions/animes";
 import {useEffect} from "react";
 
 import CharacterCard from "./CharacterCard";
@@ -10,18 +9,12 @@ const AnimeDetails = () => {
     const anime = useSelector((state) => state.animes.anime);
     const { animeId } = useParams();
     const dispatch = useDispatch();
-    const fetchAnimeDetails = async () => {
-        const res = await axios.get(`http://localhost:8000/api/animes/${animeId}/`)
-            .catch(err => console.log(err))
-        console.log(res.data)
-        dispatch(setAnimeDetails(res.data))
-    }
 
     useEffect(() => {
         if (anime == null) {
-            fetchAnimeDetails();
+            dispatch(getAnimeDetails(animeId));
         }
-    })
+    });
 
     return (
         <div className="container">

@@ -1,14 +1,48 @@
-import { SET_SEARCH_LINE, FILTERING_FLUSH } from "./types";
+import axios from "axios";
+import {GET_FILTERING_DATA, GET_GENRES_LIST, GET_PRODUCERS_LIST, GET_STATUSES_LIST, GET_TYPES_LIST} from "./types";
 
-export const setSearchLine = (keyword) => (dispatch) => {
-    dispatch({
-       type: SET_SEARCH_LINE,
-       payload: keyword
-    });
-};
+const getGenres = () => (dispatch) => {
+    axios.get('http://localhost:8000/api/genres/')
+        .catch(err => console.log(err))
+        .then(res => dispatch({
+            type: GET_GENRES_LIST,
+            payload: res.data.map(obj => obj.name)
+        }))
+}
 
-export const flushFilters = () => (dispatch) => {
+const getStatuses = () => (dispatch) => {
+    axios.get('http://localhost:8000/api/statuses/')
+        .catch(err => console.log(err))
+        .then(res => dispatch({
+            type: GET_STATUSES_LIST,
+            payload: res.data.map(obj => obj.name)
+        }))
+}
+
+const getTypes = () => (dispatch) => {
+    axios.get('http://localhost:8000/api/types/')
+        .catch(err => console.log(err))
+        .then(res => dispatch({
+            type: GET_TYPES_LIST,
+            payload: res.data.map(obj => obj.name)
+        }))
+}
+
+const getProducers = () => (dispatch) => {
+    axios.get('http://localhost:8000/api/producers/')
+        .catch(err => console.log(err))
+        .then(res => dispatch({
+            type: GET_PRODUCERS_LIST,
+            payload: res.data.map(obj => obj.name)
+        }))
+}
+
+export const getFilteringData = () => (dispatch) => {
+    dispatch(getGenres());
+    dispatch(getProducers());
+    dispatch(getStatuses());
+    dispatch(getTypes());
     dispatch({
-        type: FILTERING_FLUSH
+        type: GET_FILTERING_DATA
     })
-};
+}

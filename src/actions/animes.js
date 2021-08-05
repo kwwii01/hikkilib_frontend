@@ -2,13 +2,25 @@ import {GET_ANIMES, GET_ANIME_DETAILS} from "./types";
 import axios from "axios";
 
 //GET ANIMES
-export const getAnimes = (searchLine) => (dispatch) => {
-    let url;
-    if (searchLine) {
-        url = `http://localhost:8000/api/animes/?search=${searchLine}`;
-    } else {
-        url = 'http://localhost:8000/api/animes/';
+export const getAnimes = (searchLine, genres, types, producers, statuses) => (dispatch) => {
+    let url = 'http://localhost:8000/api/animes/?';
+    if (searchLine && (searchLine !== '')) {
+        url += `&search=${searchLine}`;
     }
+
+    if (genres) {
+        url += `&genres=${genres.join(',')}`;
+    }
+    if (types) {
+        url += `&types=${types.join(',')}`;
+    }
+    if (producers) {
+        url += `&producers=${producers.join(',')}`;
+    }
+    if (statuses) {
+        url += `&statuses=${statuses.join(',')}`;
+    }
+
     axios.get(url)
        .catch((err) => console.log(err))
        .then(res => {

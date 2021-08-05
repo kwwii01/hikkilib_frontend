@@ -1,29 +1,45 @@
-import {FILTERING_FLUSH, SET_SEARCH_LINE} from "../actions/types";
+import {
+    GET_GENRES_LIST,
+    GET_TYPES_LIST,
+    GET_STATUSES_LIST,
+    GET_PRODUCERS_LIST,
+    GET_FILTERING_DATA
+} from "../actions/types";
 
 const initialState = {
     genres: [],
     types: [],
     producers: [],
-    search: null,
-    isFlushed: true
+    statuses: [],
+    ready: false
 }
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case SET_SEARCH_LINE:
+        case GET_GENRES_LIST:
             return {
                 ...state,
-                search: action.payload,
-                isFlushed: false
+                genres: action.payload
             }
-        case FILTERING_FLUSH:
+        case GET_TYPES_LIST:
             return {
                 ...state,
-                search: null,
-                genres: [],
-                types: [],
-                producers: [],
-                isFlushed: true
+                types: action.payload
+            }
+        case GET_STATUSES_LIST:
+            return {
+                ...state,
+                statuses: action.payload
+            }
+        case GET_PRODUCERS_LIST:
+            return {
+                ...state,
+                producers: action.payload
+            }
+        case GET_FILTERING_DATA:
+            return {
+                ...state,
+                ready: true
             }
         default:
             return state;

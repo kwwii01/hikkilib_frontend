@@ -11,7 +11,7 @@ const Header = () => {
     const history = useHistory();
     const [username, setUsername] = useState(['']);
     const [picture, setPicture] = useState(['']);
-    const [searchInputValue, setSearchInputValue] = useState(['']);
+    const [searchInputValue, setSearchInputValue] = useState('');
     const user = auth.user;
     const current_profile = auth.current_profile;
 
@@ -21,7 +21,11 @@ const Header = () => {
 
     const onSearchSubmit = (e) => {
         e.preventDefault()
-        history.push(`/animes/search/${searchInputValue}`);
+        if (searchInputValue === '') {
+            history.push('/');
+        } else {
+            history.push(`/animes/search/${searchInputValue}`);
+        }
     }
 
     const onChange = (e) => {

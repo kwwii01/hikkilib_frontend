@@ -2,14 +2,12 @@ import {
     GET_GENRES_LIST,
     GET_TYPES_LIST,
     GET_STATUSES_LIST,
-    GET_PRODUCERS_LIST,
     GET_FILTERING_DATA
 } from "../actions/types";
 
 const initialState = {
     genres: [],
     types: [],
-    producers: [],
     statuses: [],
     ready: false
 }
@@ -30,11 +28,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 statuses: action.payload
-            }
-        case GET_PRODUCERS_LIST:
-            return {
-                ...state,
-                producers: action.payload
             }
         case GET_FILTERING_DATA:
             return {

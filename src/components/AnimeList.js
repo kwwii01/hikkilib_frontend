@@ -14,7 +14,6 @@ const AnimeList = () => {
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedStatuses, setSelectedStatuses] = useState([]);
-    const [selectedProducers, setSelectedProducers] = useState([]);
 
     useEffect(() => {
         if (searchLine) {
@@ -32,7 +31,7 @@ const AnimeList = () => {
 
     const onFiltersSubmit = (e) => {
         e.preventDefault();
-        dispatch(getAnimes(searchLine, selectedGenres, selectedTypes, selectedProducers));
+        dispatch(getAnimes(searchLine, selectedGenres, selectedTypes));
     }
 
     const onTypesChange = (e) => {
@@ -65,21 +64,10 @@ const AnimeList = () => {
         console.log(selectedGenres);
     };
 
-    const onProducersChange = (e) => {
-        if (e.target.checked) {
-            setSelectedProducers([...selectedProducers, e.target.value]);
-        } else {
-            let temp = selectedProducers.filter(producer => producer !== e.target.value);
-            setSelectedProducers(temp);
-        }
-        console.log(selectedProducers);
-    };
-
     const onClearClick = () => {
         setSelectedStatuses([]);
         setSelectedGenres([]);
         setSelectedTypes([]);
-        setSelectedProducers([]);
         dispatch(getAnimes(searchLine));
     }
 
@@ -118,17 +106,6 @@ const AnimeList = () => {
                                                    id={`typesCheckBox${index}`} onChange={onTypesChange}/>
                                             <label className="form-check-label" htmlFor={`typesCheckBox${index}`}>
                                                 {type}
-                                            </label>
-                                        </div>)
-                                  )}
-                              </div>
-                              <h3>Producer:</h3>
-                              <div className="form-check">
-                                  {filtering.producers.map((producer, index) => (<div className='container'>
-                                            <input className="form-check-input" type="checkbox" value={producer}
-                                                   id={`producersCheckBox${index}`} onChange={onProducersChange}/>
-                                            <label className="form-check-label" htmlFor={`producersCheckBox${index}`}>
-                                                {producer}
                                             </label>
                                         </div>)
                                   )}

@@ -2,7 +2,7 @@ import {GET_ANIMES, GET_ANIME_DETAILS} from "./types";
 import axios from "axios";
 
 //GET ANIMES
-export const getAnimes = (searchLine, genres, types, producers, statuses) => (dispatch) => {
+export const getAnimes = (searchLine, genres, types, statuses) => (dispatch) => {
     let url = 'http://localhost:8000/api/animes/?';
     if (searchLine && (searchLine !== '')) {
         url += `&search=${searchLine}`;
@@ -13,9 +13,6 @@ export const getAnimes = (searchLine, genres, types, producers, statuses) => (di
     }
     if (types) {
         url += `&types=${types.join(',')}`;
-    }
-    if (producers) {
-        url += `&producers=${producers.join(',')}`;
     }
     if (statuses) {
         url += `&statuses=${statuses.join(',')}`;

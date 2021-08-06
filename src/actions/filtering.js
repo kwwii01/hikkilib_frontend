@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_FILTERING_DATA, GET_GENRES_LIST, GET_PRODUCERS_LIST, GET_STATUSES_LIST, GET_TYPES_LIST} from "./types";
+import {GET_FILTERING_DATA, GET_GENRES_LIST, GET_STATUSES_LIST, GET_TYPES_LIST} from "./types";
 
 const getGenres = () => (dispatch) => {
     axios.get('http://localhost:8000/api/genres/')
@@ -28,18 +28,8 @@ const getTypes = () => (dispatch) => {
         }))
 }
 
-const getProducers = () => (dispatch) => {
-    axios.get('http://localhost:8000/api/producers/')
-        .catch(err => console.log(err))
-        .then(res => dispatch({
-            type: GET_PRODUCERS_LIST,
-            payload: res.data.map(obj => obj.name)
-        }))
-}
-
 export const getFilteringData = () => (dispatch) => {
     dispatch(getGenres());
-    dispatch(getProducers());
     dispatch(getStatuses());
     dispatch(getTypes());
     dispatch({

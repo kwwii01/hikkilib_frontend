@@ -9,8 +9,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import {loadUser} from "./actions/auth";
 import Messages from "./components/Messages";
-import {setAnimes} from "./actions/animes";
-
+import {Profile} from "./components/Profile";
 
 const App = () => {
     const auth = useSelector((state) => state.auth)
@@ -43,6 +42,9 @@ const App = () => {
                     </Route>
                     <Route path='/users/login' exact>
                         <Login />
+                    </Route>
+                    <Route path='/profiles/:profileId' exact>
+                        <Profile />
                     </Route>
                     <Route>
                         404 not found

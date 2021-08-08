@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import {loadUser} from "./actions/auth";
 import Messages from "./components/Messages";
 import {Profile} from "./components/Profile";
+import {ProfileEdit} from "./components/ProfileEdit";
 
 const App = () => {
     const auth = useSelector((state) => state.auth)
@@ -45,6 +46,9 @@ const App = () => {
                     </Route>
                     <Route path='/profiles/me/' exact>
                         <Profile />
+                    </Route>
+                    <Route path='/profiles/me/edit' exact>
+                        <ProfileEdit />
                     </Route>
                     <Route path='/profiles/:profileId' exact>
                         <Profile />

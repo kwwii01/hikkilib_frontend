@@ -57,7 +57,7 @@ const Header = () => {
                     </ul>
                     <ul className="nav">
                         {auth.isAuthenticated
-                        ? <><li className="nav-item"><Link to="#" className="nav-link link-dark px-2">{username},
+                        ? <><li className="nav-item"><Link to="/profiles/me" className="nav-link link-dark px-2">{username},
                                 <img src={picture} alt="username" width='40' height='40'/>
                         </Link></li>
                         <li className="nav-item"><button onClick={onLogoutClick}

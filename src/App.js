@@ -43,6 +43,9 @@ const App = () => {
                     <Route path='/users/login' exact>
                         <Login />
                     </Route>
+                    <Route path='/profiles/me/' exact>
+                        <Profile />
+                    </Route>
                     <Route path='/profiles/:profileId' exact>
                         <Profile />
                     </Route>

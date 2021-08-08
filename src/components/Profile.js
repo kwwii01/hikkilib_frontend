@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getProfile} from "../actions/profiles";
@@ -6,32 +6,37 @@ import {getProfile} from "../actions/profiles";
 export const Profile = () => {
     const { profileId } = useParams();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const history = useHistory();
     const auth = useSelector((state) => state.auth);
-    const profile = useSelector((state) => state.profiles.profile);
+    const profiles = useSelector((state) => state.profiles);
     const [profileToShow, setProfileToShow] = useState(null);
-    const [currentProfileId, setCurrentProfileId] = useState(null);
 
     useEffect(() => {
-        if (!profileToShow) {
-            dispatch(getProfile(profileId));
-            setProfileToShow(profile);
-        }
-    });
+        if (location.pathname !== '/profiles/me') dispatch(getProfile(profileId));
+    }, [profileId]);
 
     useEffect(() => {
-        if (auth.current_profile) {
-            setCurrentProfileId(auth.current_profile.id);
+        if (location.pathname === '/profiles/me') {
+            if (auth.current_profile) {
+                setProfileToShow(auth.current_profile)
+            }
+        } else {
+            if ((profiles.profile && auth.current_profile) && (profiles.profile.id === auth.current_profile.id)) {
+                history.replace('/profiles/me')
+            }
+            setProfileToShow(profiles.profile);
         }
-    }, [auth.current_profile]);
+    }, [profileId, profiles.isLoading, auth.current_profile]);
 
     return (
         <>
             {profileToShow
                 ? <>
                     <h1>{profileToShow.user}</h1>
-                    {(currentProfileId === profileToShow.id) && <h3>Edit profile</h3>}
+                    {(profileToShow === auth.current_profile) && <h3>Edit profile</h3>}
                   </>
-                : <h1>Profile does not exist</h1>
+                : profiles.isLoading && <h1>Loading...</h1>
             }
         </>
     )

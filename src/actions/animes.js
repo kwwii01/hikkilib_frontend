@@ -1,5 +1,6 @@
-import {GET_ANIMES, GET_ANIME_DETAILS} from "./types";
+import {GET_ANIMES, GET_ANIME_DETAILS, GET_ANIME_DETAILS_ERROR} from "./types";
 import axios from "axios";
+import {addErrorMessage} from "./messages";
 
 //GET ANIMES
 export const getAnimes = (searchLine, genres, types, statuses) => (dispatch) => {
@@ -9,7 +10,9 @@ export const getAnimes = (searchLine, genres, types, statuses) => (dispatch) => 
     }
 
     if (genres) {
-        url += `&genres=${genres.join(',')}`;
+        for (const genre of genres) {
+            url += `&genres=${genre}`;
+        }
     }
     if (types) {
         url += `&types=${types.join(',')}`;
@@ -32,7 +35,10 @@ export const getAnimes = (searchLine, genres, types, statuses) => (dispatch) => 
 export const getAnimeDetails = (animeId) => (dispatch) => {
     axios.get(`http://localhost:8000/api/animes/${animeId}/`)
         .catch(err => {
-            console.log(err);
+            dispatch(addErrorMessage("There's no anime with requested id."))
+            return {
+                type: GET_ANIME_DETAILS_ERROR
+            }
         })
         .then(res => {
             dispatch({

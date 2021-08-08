@@ -1,4 +1,4 @@
-import {GET_ANIME_DETAILS, GET_ANIMES} from "../actions/types";
+import {GET_ANIME_DETAILS, GET_ANIME_DETAILS_ERROR, GET_ANIMES} from "../actions/types";
 
 const initialState = {
     animes: [],
@@ -11,13 +11,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 animes: action.payload,
-                anime: null
             }
         case GET_ANIME_DETAILS:
             return {
                 ...state,
-                anime: action.payload,
-                animes: []
+                anime: action.payload
+            }
+        case GET_ANIME_DETAILS_ERROR:
+            return {
+                ...state,
+                anime: null
             }
         default:
             return state;

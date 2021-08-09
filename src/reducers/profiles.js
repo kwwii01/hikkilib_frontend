@@ -1,4 +1,4 @@
-import {GET_PROFILE_FAIL, GET_PROFILE_LOADING, GET_PROFILE_SUCCESS} from "../actions/types";
+import {GET_PROFILE_FAIL, GET_PROFILE_LOADING, GET_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL} from "../actions/types";
 
 const initialState = {
     profile: null,
@@ -23,6 +23,10 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isLoading: true
+            }
+        case UPDATE_PROFILE_FAIL:
+            return {
+                ...state
             }
         default:
             return state;

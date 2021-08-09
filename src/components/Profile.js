@@ -44,7 +44,7 @@ export const Profile = () => {
                                 <img src={profileToShow.picture} alt={profileToShow.user} width='200' height='200' />
                             </div>
                             {(profileToShow === auth.current_profile) &&
-                            <><Link className='h3 text-dark' to='#'>Edit profile</Link><br/></>}
+                            <><Link className='h3 text-dark' to='/profiles/me/edit'>Edit profile</Link><br/></>}
                             <Link className='h3 text-dark' to='#'>View anime list</Link>
                         </div>
                         <div className="col-md-9">

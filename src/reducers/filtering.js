@@ -12,7 +12,7 @@ const initialState = {
     ready: false
 }
 
-export default function (state = initialState, action) {
+export default function filtering(state = initialState, action) {
     switch (action.type) {
         case GET_GENRES_LIST:
             return {

@@ -5,7 +5,7 @@ const initialState = {
     anime: null,
 }
 
-export default function (state = initialState, action) {
+export default function animes(state = initialState, action) {
     switch (action.type) {
         case GET_ANIMES:
             return {

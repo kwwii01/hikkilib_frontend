@@ -1,5 +1,4 @@
 import {
-    ADD_ERROR_MESSAGE,
     AUTH_ERROR,
     AUTH_SUCCESS, LOAD_PROFILE_FAILED, LOAD_PROFILE_SUCCESS,
     LOGIN_FAILED,
@@ -20,15 +19,15 @@ export const loadProfile = (token) => (dispatch) => {
     }
     axios
         .get(`http://localhost:8000/api/profiles/me/`, config)
+        .catch(err => {
+            dispatch({
+                type: LOAD_PROFILE_FAILED,
+            });
+        })
         .then(res => {
             dispatch({
                 type: LOAD_PROFILE_SUCCESS,
                 payload: res.data
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: LOAD_PROFILE_FAILED,
             });
         });
 }
@@ -47,18 +46,17 @@ export const loadUser = (token) => (dispatch) => {
 
     axios
         .get('http://localhost:8000/auth/users/me/', config)
+        .catch(err => {
+            dispatch({
+                type: AUTH_ERROR,
+            });
+        })
         .then(res => {
             dispatch({
                 type: AUTH_SUCCESS,
                 payload: res.data
             })
-            console.log(res.data)
             dispatch(loadProfile(token));
-        })
-        .catch(err => {
-            dispatch({
-                type: AUTH_ERROR,
-            });
         });
 };
 
@@ -75,18 +73,18 @@ export const loginUser = (username, password) => (dispatch) => {
 
     axios
         .post('http://localhost:8000/auth/token/login/', body, config)
+        .catch(err => {
+            const msg = err.response.data.non_field_errors.join();
+            dispatch(addErrorMessage(msg));
+            return ({
+                type: LOGIN_FAILED,
+            });
+        })
         .then(res => {
             dispatch(addSuccessMessage('Successfully logged in!'));
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
-            });
-        })
-        .catch(err => {
-            const msg = err.response.data.non_field_errors.join();
-            dispatch(addErrorMessage(msg));
-            dispatch({
-                type: LOGIN_FAILED,
             });
         });
 };
@@ -103,20 +101,18 @@ export const logoutUser = (token) => (dispatch) => {
         config.headers['Authorization'] = `Token ${token}`;
     }
 
-    console.log(config);
-
     axios
         .post('http://localhost:8000/auth/token/logout/','' ,config)
+        .catch(err => {
+            dispatch(addErrorMessage('Something went wrong.'));
+            return ({
+                type: LOGOUT_FAILED,
+            });
+        })
         .then(res => {
             dispatch(addSuccessMessage('Successfully logged out!'));
             dispatch({
                 type: LOGOUT_SUCCESS,
-            });
-        })
-        .catch(err => {
-            dispatch(addErrorMessage('Something went wrong.'));
-            dispatch({
-                type: LOGOUT_FAILED,
             });
         });
 };
@@ -133,12 +129,6 @@ export const registerUser = (username, password, email) => (dispatch) => {
 
     axios
         .post('http://localhost:8000/auth/users/', body, config)
-        .then(res => {
-            dispatch(addSuccessMessage('Successfully created new user, log in and you are ready to go!'));
-            dispatch({
-                type: REGISTRATION_SUCCESS,
-            });
-        })
         .catch(err => {
             if (err.response.data.username) {
                 dispatch(addErrorMessage(err.response.data.username.join('\n')));
@@ -149,8 +139,14 @@ export const registerUser = (username, password, email) => (dispatch) => {
             if (err.response.data.password) {
                 dispatch(addErrorMessage(err.response.data.password.join('\n')));
             }
-            dispatch({
+            return {
                 type: REGISTRATION_FAILED,
+            };
+        })
+        .then(res => {
+            dispatch(addSuccessMessage('Successfully created new user, log in and you are ready to go!'));
+            dispatch({
+                type: REGISTRATION_SUCCESS,
             });
-        });
+        })
 }

@@ -21,6 +21,7 @@ const AnimeList = () => {
         } else {
             dispatch(getAnimes());
         }
+        // eslint-disable-next-line
     }, [location.pathname]);
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const AnimeList = () => {
 
     const onFiltersSubmit = (e) => {
         e.preventDefault();
-        dispatch(getAnimes(searchLine, selectedGenres, selectedTypes));
+        dispatch(getAnimes(searchLine, selectedGenres, selectedTypes, selectedStatuses));
     }
 
     const onTypesChange = (e) => {
@@ -41,7 +42,6 @@ const AnimeList = () => {
             let temp = selectedTypes.filter(type => type !== e.target.value);
             setSelectedTypes(temp);
         }
-        console.log(selectedTypes);
     };
 
     const onStatusesChange = (e) => {
@@ -51,7 +51,6 @@ const AnimeList = () => {
             let temp = selectedStatuses.filter(status => status !== e.target.value);
             setSelectedStatuses(temp);
         }
-        console.log(selectedStatuses);
     };
 
     const onGenresChange = (e) => {
@@ -61,7 +60,6 @@ const AnimeList = () => {
             let temp = selectedGenres.filter(genre => genre !== e.target.value);
             setSelectedGenres(temp);
         }
-        console.log(selectedGenres);
     };
 
     const onClearClick = () => {
@@ -90,7 +88,7 @@ const AnimeList = () => {
                           <form onSubmit={onFiltersSubmit}>
                               <h3>Status:</h3>
                               <div className="form-check">
-                                  {filtering.statuses.map((status, index) => (<div className='container'>
+                                  {filtering.statuses.map((status, index) => (<div className='container' key={index}>
                                             <input className="form-check-input" type="checkbox" value={status}
                                                    id={`statusCheckBox${index}`} onChange={onStatusesChange}/>
                                             <label className="form-check-label" htmlFor={`statusCheckBox${index}`}>
@@ -101,7 +99,7 @@ const AnimeList = () => {
                               </div>
                               <h3>Type:</h3>
                               <div className="form-check">
-                                  {filtering.types.map((type, index) => (<div className='container'>
+                                  {filtering.types.map((type, index) => (<div className='container' key={index}>
                                             <input className="form-check-input" type="checkbox" value={type}
                                                    id={`typesCheckBox${index}`} onChange={onTypesChange}/>
                                             <label className="form-check-label" htmlFor={`typesCheckBox${index}`}>
@@ -112,7 +110,7 @@ const AnimeList = () => {
                               </div>
                               <h3>Genre:</h3>
                               <div className="form-check">
-                                  {filtering.genres.map((genre, index) => (<div className='container'>
+                                  {filtering.genres.map((genre, index) => (<div className='container' key={index}>
                                             <input className="form-check-input" type="checkbox" value={genre}
                                                    id={`genresCheckBox${index}`} onChange={onGenresChange}/>
                                             <label className="form-check-label" htmlFor={`genresCheckBox${index}`}>

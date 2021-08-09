@@ -15,6 +15,7 @@ export const Profile = () => {
 
     useEffect(() => {
         if (location.pathname !== '/profiles/me') dispatch(getProfile(profileId));
+        // eslint-disable-next-line
     }, [profileId]);
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export const Profile = () => {
             }
             setProfileToShow(profiles.profile);
         }
+        // eslint-disable-next-line
     }, [profileId, profiles.isLoading, auth.current_profile]);
 
     return (

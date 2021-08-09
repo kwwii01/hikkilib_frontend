@@ -16,7 +16,7 @@ const initialState = {
     current_profile: null
 }
 
-export default function(state = initialState, action) {
+export default function auth(state = initialState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
             return {

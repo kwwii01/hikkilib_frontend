@@ -24,6 +24,7 @@ export const ProfileEdit = () => {
         } else {
             setProfileToEdit(auth.current_profile);
         }
+        // eslint-disable-next-line
     }, [auth.current_profile])
 
     const onSaveButtonClick = (e) => {

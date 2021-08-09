@@ -2,6 +2,7 @@ import {Link, Redirect} from "react-router-dom";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../actions/auth";
+import {addErrorMessage} from "../actions/messages";
 
 const Register = () => {
     const [username, setUsername] = useState([]);
@@ -14,7 +15,11 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(registerUser(username, password1, email));
+        if (password1 === password2) {
+            dispatch(registerUser(username, password1, email));
+        } else {
+            dispatch(addErrorMessage("Confirm your password first."));
+        }
     };
 
     const onUsernameChange = (e) => {

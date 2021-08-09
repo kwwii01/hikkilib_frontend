@@ -2,7 +2,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../actions/auth";
 import { useEffect, useState } from "react";
-import { setSearchLine } from "../actions/filtering";
 
 const Header = () => {
     const auth = useSelector((state) => state.auth);

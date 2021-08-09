@@ -7,7 +7,7 @@ const initialState = {
     isFlushed: true
 }
 
-export default function (state = initialState, action) {
+export default function messages(state = initialState, action) {
     switch (action.type) {
         case ADD_SUCCESS_MESSAGE:
             return {

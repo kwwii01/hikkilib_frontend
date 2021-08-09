@@ -4,7 +4,7 @@ import {
     GET_PROFILE_LOADING,
     GET_PROFILE_SUCCESS,
     LOAD_PROFILE_SUCCESS,
-    UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS
+    UPDATE_PROFILE_FAIL
 } from "./types";
 import {addErrorMessage, addSuccessMessage} from "./messages";
 
